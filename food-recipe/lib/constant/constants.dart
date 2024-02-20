@@ -1,9 +1,9 @@
 class Constants {
   static const double screenPadding = 20;
-  static const String currency = '৳';
-  static var API_HOST = "";
+  static const String currency = '\$';
+  static var API_HOST = "https://api.spoonacular.com";
 
-  static final PostRegister = "$API_HOST/auth/signup";
-  static final PostLogin = "$API_HOST/auth/login";
+  static final getrecipes = "$API_HOST/recipes/complexSearch";
+  
 
 }

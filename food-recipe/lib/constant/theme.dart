@@ -144,28 +144,24 @@ class ThemeHelper extends GetxController {
     // begin: Alignment(1.1, 0.0),
     // end: Alignment.bottomRight,
   );
+final backgroundGradient = const LinearGradient(
+  colors: [
+    Color.fromARGB(255, 144, 238, 144),  // Light Green
+    Color.fromARGB(255, 144, 238, 144),  // Light Green
+    Color.fromARGB(255, 50, 205, 50),    // Lime Green
+    Color.fromARGB(255, 99, 212, 99),    // Forest Green
+  ],
+  stops: [
+    0.5,
+    0.4,
+    0.6,
+    0.9,
+  ],
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+);
 
-  final backgroundGradient = const LinearGradient(
-    colors: [
-      Color.fromARGB(255, 248, 94, 86),
-      Color.fromARGB(255, 242, 96, 89),
 
-      Color.fromARGB(255, 243, 100, 95),
-      Color.fromARGB(255, 248, 105, 110),
-      // Color.fromARGB(255, 250, 103, 96),
-      // Color.fromARGB(255, 255, 123, 116),
-      // Color(0xFFf7746c),
-      // Color.fromARGB(255, 250, 125, 119),
-    ],
-    stops: [
-      0.5,
-      0.4,
-      0.6,
-      0.9,
-    ],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
   SystemUiOverlayStyle get systemUiOverlayStyleMain => SystemUiOverlayStyle(
         statusBarColor: Color(0xffffffff),
         systemNavigationBarColor: Color(0xffffffff),

@@ -1,16 +1,13 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:food_recipe/MVC/view/homeScreen.dart';
 import 'package:food_recipe/components/spring_widget.dart';
 import 'package:food_recipe/constant/constants.dart';
 import 'package:food_recipe/constant/navigation.dart';
 import 'package:food_recipe/constant/theme.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../components/round_button.dart';
-import '../../../helper/data_storage.dart';
+
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({
@@ -63,7 +60,9 @@ class WelcomeScreen extends StatelessWidget {
 
                 Expanded(flex: 2, child: SizedBox(height: 30.sp)),
                 SpringWidget(
-                  onTap: () {},
+                  onTap: () {
+                    Navigation.getInstance.RightToLeft_PageNavigation(context, HomeScreen());
+                  },
                   child: RoundButton(
                     margin: 0,
                     backgroundColor: themecontroller.colorPrimary,

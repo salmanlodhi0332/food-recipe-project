@@ -41,85 +41,99 @@ class CustomTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            label,
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: themecontroller.colorPrimary.withOpacity(0.1),
+            spreadRadius: 0.7,
+            blurRadius: 10,
+            blurStyle: BlurStyle.inner,
+            offset: const Offset(8, 7), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              label,
+              style: TextStyle(
+                  color: themecontroller.textcolor,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12.sp),
+            ),
+          ),
+          SizedBox(
+            height: 5.sp,
+          ),
+          TextFormField(
+            onChanged: onchange,
+            enabled: enabled,
+            focusNode: focusNode,
+            controller: controller,
+            keyboardType: inputType,
+            obscureText: obscureText!,
+            maxLines: maxLines ?? 1,
             style: TextStyle(
-                color: themecontroller.textcolor,
-                fontWeight: FontWeight.w700,
-                fontSize: 12.sp),
-          ),
-        ),
-        SizedBox(
-          height: 5.sp,
-        ),
-        TextFormField(
-          onChanged: onchange,
-          enabled: enabled,
-          focusNode: focusNode,
-          controller: controller,
-          keyboardType: inputType,
-          obscureText: obscureText!,
-          maxLines: maxLines ?? 1,
-          style: TextStyle(
-            color: themecontroller.textcolor,
-            fontSize: 14,
-          ),
-          inputFormatters: [
-            FilteringTextInputFormatter.deny(
-                RegExp(r'\s\s+')), // Deny consecutive spaces
-            LeadingSpaceTrimmerInputFormatter(), // Custom input formatter to trim leading spaces
-          ],
-          validator: validator,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-            fillColor: fieldColor ?? themecontroller.textfiledecolor,
-            filled: true,
-            suffixIcon: suffixIcon,
-            prefixIcon: icon,
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: themecontroller.bordercolor.withOpacity(0.8)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: themecontroller.bordercolor.withOpacity(0.8)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: themecontroller.bordercolor.withOpacity(0.8)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: themecontroller.bordercolor.withOpacity(0.8)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: themecontroller.bordercolor.withOpacity(0.8)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: themecontroller.bordercolor.withOpacity(0.8)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            counterStyle: TextStyle(
               color: themecontroller.textcolor,
+              fontSize: 14,
             ),
-            hintText: hintText,
-            hintStyle: TextStyle(
-              color: themecontroller.textcolor.withOpacity(0.5),
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(
+                  RegExp(r'\s\s+')), // Deny consecutive spaces
+              LeadingSpaceTrimmerInputFormatter(), // Custom input formatter to trim leading spaces
+            ],
+            validator: validator,
+            decoration: InputDecoration(
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              fillColor: fieldColor ?? themecontroller.textfiledecolor,
+              filled: true,
+              suffixIcon: suffixIcon,
+              prefixIcon: icon,
+              border: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: themecontroller.bordercolor.withOpacity(0.8)),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: themecontroller.bordercolor.withOpacity(0.8)),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: themecontroller.bordercolor.withOpacity(0.8)),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: themecontroller.bordercolor.withOpacity(0.8)),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: themecontroller.bordercolor.withOpacity(0.8)),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: themecontroller.bordercolor.withOpacity(0.8)),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              counterStyle: TextStyle(
+                color: themecontroller.textcolor,
+              ),
+              hintText: hintText,
+              hintStyle: TextStyle(
+                color: themecontroller.textcolor.withOpacity(0.5),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

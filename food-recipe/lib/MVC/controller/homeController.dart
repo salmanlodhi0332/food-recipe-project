@@ -1,59 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/MVC/model/recipeModel.dart';
+import 'package:food_recipe/services/app_service.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeController extends GetxController {
-  @override
-  final DateController = TextEditingController();
-  final fullnameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final DropDownValueController = TextEditingController();
 
-  final CardNoController = TextEditingController();
-  final expiryDateController = TextEditingController();
-  final CVVController = TextEditingController();
-  final MotherController = TextEditingController();
-  final OtpController = TextEditingController();
+  
+  final SearchController = TextEditingController();
+  final RxList<RecipeModel> recipelist = <RecipeModel>[].obs;
+  final RxBool Isloading = false.obs;
 
-  List<String> DropdownList = [
-    'KYC Update',
-    'Pin generate',
-    'Card block',
-    'Card unblock',
-    'New credit Card apply',
-    'Other Credit Card',
-  ];
-  void onInit() {
-    super.onInit();
+  getRecipeData() async {
+    try {
+      Isloading.value = true;
+      var serverResponse = await AppService.getInstance.getRecipeData();
+      recipelist.addAll(serverResponse);
+
+      print('recipelist count :${recipelist.length}');
+      Isloading.value = false;
+    } catch (e) {
+      print('error in getRecipeData: $e');
+      Isloading.value = false;
+      return [];
+    }
   }
 
-  insert_userDetails() async {
-    var Data = await Supabase.instance.client.from('user_tbl').insert([
-      {
-        'name': fullnameController.text,
-        'mobile_number': phoneController.text,
-        'DOB': DateController.text,
-        'option': DropDownValueController.text,
-        'card_number': CardNoController.text,
-        'expiryDate': expiryDateController.text,
-        'mothername': MotherController.text,
-        'cvv': CVVController.text,
-        'otp': OtpController.text,
-      }
-    ]);
-
-    // fullnameController.clear();
-    // phoneController.clear();
-    // DateController.clear();
-    // DropDownValueController.clear();
-    // CardNoController.clear();
-    // DropDownValueController.clear();
-    // expiryDateController.clear();
-    // CVVController.clear();
-    // OtpController.clear();
-  }
-
-  @override
   void onClose() {
     super.onClose();
   }

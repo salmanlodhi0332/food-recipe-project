@@ -1,4 +1,4 @@
 {
-    "app_name": "Foodeo",
-    "api_host": "https://6ea4-43-229-165-157.ngrok-free.app"
+    "app_name": "Food Recipe",
+    "api_host": "https://api.spoonacular.com"
 }

@@ -1,85 +1,77 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:food_recipe/components/spring_widget.dart';
+import 'package:food_recipe/MVC/controller/homeController.dart';
+import 'package:food_recipe/components/custom_textfiled.dart';
+import 'package:food_recipe/components/recipeCard.dart';
+import 'package:food_recipe/components/small_loader.dart';
 import 'package:food_recipe/constant/constants.dart';
-import 'package:food_recipe/constant/navigation.dart';
 import 'package:food_recipe/constant/theme.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../../components/round_button.dart';
-import '../../../helper/data_storage.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({
+class HomeScreen extends StatelessWidget {
+  HomeScreen({
     super.key,
   });
-
+  final homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ThemeHelper>(builder: (themecontroller) {
+    return GetBuilder<ThemeHelper>(initState: (state) {
+      homeController.getRecipeData();
+    }, builder: (themecontroller) {
       return AnnotatedRegion(
         value: themecontroller.systemUiOverlayStyleForwhite,
         child: Scaffold(
-          body: Container(
-            padding: EdgeInsets.symmetric(horizontal: Constants.screenPadding),
-            decoration: BoxDecoration(color: themecontroller.backgoundcolor),
-            child: Column(
-              children: [
-                // "assets/images/titleLogo.png",
-                Expanded(flex: 2, child: SizedBox(height: 30.sp)),
-                Container(
-                  height: 300.sp,
-                  width: 300.sp,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/splash-image.png',
-                      ),
-                      fit: BoxFit.contain,
+          body: RefreshIndicator(
+            onRefresh: () async{
+              await homeController.getRecipeData();
+            },
+            child: Container(
+              padding:
+                  EdgeInsets.symmetric(horizontal: Constants.screenPadding),
+              decoration: BoxDecoration(color: themecontroller.backgoundcolor),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20.sp,
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 40.sp,
-                ),
-                 Container(
-                  height: 70.sp,
-                  // width: 300.sp,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/title-image.png',
-                      ),
-                      fit: BoxFit.contain,
+                    CustomTextFieldWidget(
+                        controller: homeController.SearchController,
+                        hintText: 'Search Food..',
+                        onsubmit: () {},
+                        inputType: TextInputType.name,
+                        label: '',
+                        enabled: true),
+                    Obx(
+                      () => homeController.Isloading.value
+                          ? SmallLoader()
+                          : homeController.recipelist.isEmpty
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                        'Data Not Loaded..',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              : ListView.builder(
+                                primary: false,
+                                  shrinkWrap: true,
+                                  itemCount: homeController.recipelist.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    var data = homeController.recipelist[index];
+                                    return recipeCard(
+                                      recipedata: data,
+                                    );
+                                  },
+                                ),
                     ),
-                  ),
+                  ],
                 ),
-                SizedBox(
-                  height: 20.sp,
-                ),
-
-                Expanded(flex: 2, child: SizedBox(height: 30.sp)),
-                SpringWidget(
-                  onTap: () {},
-                  child: RoundButton(
-                    margin: 0,
-                    backgroundColor: themecontroller.colorPrimary,
-                    borderColor: themecontroller.colorwhite,
-                    height: 58.sp,
-                    onTap: () {
-                      // controller.selectedUserType.value = 'user';
-                      // log('object  ${controller.selectedUserType.value}');
-                    },
-                    title: 'Get Started',
-                    gradient: false,
-                    textColor: themecontroller.colorwhite,
-                  ),
-                ),
-                SizedBox(height: 12.sp),
-              ],
+              ),
             ),
           ),
         ),
@@ -87,5 +79,3 @@ class WelcomeScreen extends StatelessWidget {
     });
   }
 }
-
-//
