@@ -13,8 +13,10 @@ class recipeCard extends StatelessWidget {
   recipeCard({
     super.key,
     required this.recipedata,
+    required this.Isfav
   });
   final RecipeModel recipedata;
+  bool Isfav;
   final homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,7 @@ class recipeCard extends StatelessWidget {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
+                      if(Isfav)
                       LikeButton(
                         size: 30.sp,
                         circleColor:

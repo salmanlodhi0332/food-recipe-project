@@ -15,9 +15,8 @@ class favListScreen extends StatelessWidget {
   final homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ThemeHelper>(initState: (state) {
-      // homeController.getRecipeData();
-    }, builder: (themecontroller) {
+    return GetBuilder<ThemeHelper>(
+       builder: (themecontroller) {
       return AnnotatedRegion(
         value: themecontroller.systemUiOverlayStyleForwhite,
         child: Scaffold(
@@ -32,16 +31,7 @@ class favListScreen extends StatelessWidget {
                   SizedBox(
                     height: 20.sp,
                   ),
-                  // CustomTextFieldWidget(
-                  //     controller: homeController.SearchController,
-                  //     hintText: 'Search Food..',
-                  //     onsubmit: () {},
-                  //     onchange: (value) {
-                  //       homeController.searchFilter(value);
-                  //     },
-                  //     inputType: TextInputType.name,
-                  //     label: '',
-                  //     enabled: true),
+                  
                   Obx(
                     () => homeController.Isloading.value
                         ? SmallLoader()
@@ -66,6 +56,7 @@ class favListScreen extends StatelessWidget {
                                   var data = homeController.Favrecipelist[index];
                                   return recipeCard(
                                     recipedata: data,
+                                    Isfav: false,
                                   );
                                 },
                               ),

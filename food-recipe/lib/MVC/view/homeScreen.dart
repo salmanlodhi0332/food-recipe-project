@@ -94,6 +94,7 @@ class HomeScreen extends StatelessWidget {
                                     var data = homeController.filterlist[index];
                                     return recipeCard(
                                       recipedata: data,
+                                      Isfav: true,
                                     );
                                   },
                                 ),
