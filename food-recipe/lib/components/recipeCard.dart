@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_recipe/MVC/controller/homeController.dart';
 import 'package:food_recipe/MVC/model/recipeModel.dart';
 import 'package:food_recipe/components/image_widget.dart';
 import 'package:food_recipe/constant/constants.dart';
 import 'package:food_recipe/constant/theme.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
+import 'package:get/get.dart';
 
 class recipeCard extends StatelessWidget {
-  const recipeCard({
+  recipeCard({
     super.key,
     required this.recipedata,
   });
   final RecipeModel recipedata;
+  final homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ThemeHelper>(builder: (themecontroller) {
@@ -20,14 +23,21 @@ class recipeCard extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 5.sp),
         child: Container(
           height: 150.sp,
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Stack(alignment: Alignment.bottomCenter, children: [
             Container(
               height: 120.sp,
-              
               width: double.infinity,
               decoration: BoxDecoration(
-                
-                color: themecontroller.colorPrimary.withOpacity(0.9),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    offset: Offset(0, 2),
+                    spreadRadius: 1.8,
+                    blurRadius: 8,
+                  ),
+                ],
+                color: themecontroller.backgoundcolor,
                 borderRadius: BorderRadius.circular(20.sp),
               ),
               child: Padding(
@@ -47,7 +57,7 @@ class recipeCard extends StatelessWidget {
                           softWrap: true,
                           maxLines: 1,
                           style: TextStyle(
-                            fontSize: 14.sp,
+                              fontSize: 14.sp,
                               overflow: TextOverflow.ellipsis,
                               color: Colors.black,
                               fontWeight: FontWeight.w500),
@@ -62,15 +72,28 @@ class recipeCard extends StatelessWidget {
                           dotSecondaryColor: Colors.red,
                         ),
                         likeBuilder: (bool isLiked) {
+                          if (isLiked) {
+                            homeController.addOrRemoveFavorite(recipedata, 1);
+                          } else {
+                            homeController.addOrRemoveFavorite(recipedata, 0);
+                          }
                           return Icon(
                             Icons.favorite,
-                            color: isLiked ? Colors.red : Colors.grey,
+                            color: isLiked
+                                ? Colors.red
+                                : themecontroller.colorPrimary,
                             size: 30.sp,
                           );
                         },
                         // onTap: (isLiked) async {
-
-                
+                          
+                        //   isLiked = !isLiked;
+                        //   print(isLiked);
+                          // if (isLiked) {
+                          //   homeController.addOrRemoveFavorite(recipedata, 1);
+                          // } else {
+                          //   homeController.addOrRemoveFavorite(recipedata, 0);
+                          // }
                         // },
                       ),
                     ],

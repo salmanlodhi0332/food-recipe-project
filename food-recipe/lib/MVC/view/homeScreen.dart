@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_recipe/MVC/controller/homeController.dart';
+import 'package:food_recipe/MVC/view/favScreen.dart';
 import 'package:food_recipe/components/custom_textfiled.dart';
 import 'package:food_recipe/components/recipeCard.dart';
 import 'package:food_recipe/components/small_loader.dart';
+import 'package:food_recipe/components/spring_widget.dart';
 import 'package:food_recipe/constant/constants.dart';
+import 'package:food_recipe/constant/navigation.dart';
 import 'package:food_recipe/constant/theme.dart';
 import 'package:get/get.dart';
 
@@ -21,8 +24,30 @@ class HomeScreen extends StatelessWidget {
       return AnnotatedRegion(
         value: themecontroller.systemUiOverlayStyleForwhite,
         child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Food Recipes',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            actions: [
+              SpringWidget(
+                onTap: () {
+                  Navigation.getInstance
+                      .RightToLeft_PageNavigation(context, favListScreen());
+                },
+                child: Icon(
+                  Icons.favorite_border,
+                  color: themecontroller.colorPrimary,
+                  size: 30.sp,
+                ),
+              ),
+              SizedBox(
+                width: 20.sp,
+              )
+            ],
+          ),
           body: RefreshIndicator(
-            onRefresh: () async{
+            onRefresh: () async {
               await homeController.getRecipeData();
             },
             child: Container(
@@ -39,13 +64,16 @@ class HomeScreen extends StatelessWidget {
                         controller: homeController.SearchController,
                         hintText: 'Search Food..',
                         onsubmit: () {},
+                        onchange: (value) {
+                          homeController.searchFilter(value);
+                        },
                         inputType: TextInputType.name,
                         label: '',
                         enabled: true),
                     Obx(
                       () => homeController.Isloading.value
                           ? SmallLoader()
-                          : homeController.recipelist.isEmpty
+                          : homeController.filterlist.isEmpty
                               ? Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -58,11 +86,12 @@ class HomeScreen extends StatelessWidget {
                                   ],
                                 )
                               : ListView.builder(
-                                primary: false,
+                                  primary: false,
                                   shrinkWrap: true,
-                                  itemCount: homeController.recipelist.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    var data = homeController.recipelist[index];
+                                  itemCount: homeController.filterlist.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    var data = homeController.filterlist[index];
                                     return recipeCard(
                                       recipedata: data,
                                     );

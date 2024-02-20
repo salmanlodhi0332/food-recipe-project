@@ -5,13 +5,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_recipe/MVC/view/welcomeScreen.dart';
 import 'package:food_recipe/constant/theme.dart';
+import 'package:food_recipe/helper/data_storage.dart';
 import 'package:get/get.dart';
 import 'constant/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // DataStroge.getInstance.initiateSession();
-
+  final Data = Get.put(DataStorage());
   loadConfig();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

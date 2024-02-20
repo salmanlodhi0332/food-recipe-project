@@ -19,4 +19,13 @@ class RecipeModel {
       imageType: json['imageType'],
     );
   }
+
+
+   Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'image': image,
+      'imageType': imageType,
+    };
+  }
 }
